@@ -22,7 +22,7 @@ set number
 
 " whitespaces
 set list
-set listchars=tab:»-,trail:·
+set listchars=tab:»—,trail:·
 
 " vertical line
 set colorcolumn=80 " or set cc
@@ -35,11 +35,27 @@ augroup CursorLine
 augroup END
 
 " tabs and indentation
-set tabstop=2
-set softtabstop=2
-set shiftwidth=2
-set expandtab
-set smartindent
+
+" uncomment this line to use the linux kernel style or 
+" let g:use_linux_kernel_style = 1
+
+if !exists("g:use_linux_kernel_style")
+  let g:use_linux_kernel_style = 0
+endif
+
+if g:use_linux_kernel_style == 0
+  set tabstop=2
+  set softtabstop=2
+  set shiftwidth=2
+  set expandtab
+  set smartindent
+else
+  setlocal tabstop=8
+  setlocal shiftwidth=8
+  setlocal softtabstop=8
+  setlocal textwidth=80
+  setlocal noexpandtab
+endif
 
 " for unknown reasons python files don't use the above global settings so
 " we set them again specifically for python
@@ -91,6 +107,8 @@ nmap <C-\>G :pedit! +cs\ find\ g\ <C-R>=expand("<cword>")<CR> %<CR>
 
 nmap <F2> <C-\>S
 nmap <F3> <C-\>G
+
+set cscopequickfix=s-,g-,c-,d-,i-,t-,e-
 
 " --- No plugins
 
